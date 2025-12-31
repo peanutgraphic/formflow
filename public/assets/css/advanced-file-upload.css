@@ -1,0 +1,411 @@
+/**
+ * Advanced File Upload Field Styles
+ *
+ * Drag-drop zone, preview, and progress styles.
+ *
+ * @package FormFlow
+ * @since 2.8.0
+ */
+
+/* =============================================================================
+   File Upload Container
+   ============================================================================= */
+
+.isf-field-file-advanced {
+    position: relative;
+}
+
+.isf-file-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    pointer-events: none;
+}
+
+/* =============================================================================
+   Drop Zone
+   ============================================================================= */
+
+.isf-file-dropzone {
+    border: 2px dashed #cbd5e0;
+    border-radius: 8px;
+    padding: 40px 20px;
+    text-align: center;
+    background: #f7fafc;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.isf-file-dropzone:hover {
+    border-color: #2271b1;
+    background: #e7f3ff;
+}
+
+.isf-file-dropzone.isf-dragover {
+    border-color: #2271b1;
+    background: #d0e8ff;
+    box-shadow: inset 0 0 0 2px #2271b1;
+}
+
+.isf-file-dropzone.has-files {
+    padding: 20px;
+    border-style: solid;
+    background: #fff;
+}
+
+.isf-dropzone-icon {
+    font-size: 48px;
+    color: #cbd5e0;
+    margin-bottom: 15px;
+}
+
+.isf-dropzone-icon .dashicons {
+    width: 48px;
+    height: 48px;
+    font-size: 48px;
+}
+
+.isf-file-dropzone.isf-dragover .isf-dropzone-icon {
+    color: #2271b1;
+    animation: bounce 0.6s ease infinite;
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.isf-dropzone-text {
+    font-size: 16px;
+    color: #4a5568;
+    margin-bottom: 10px;
+}
+
+.isf-dropzone-text strong {
+    color: #2271b1;
+}
+
+.isf-dropzone-hint {
+    font-size: 13px;
+    color: #718096;
+}
+
+.isf-file-browse {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    background: #2271b1;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.isf-file-browse:hover {
+    background: #135e96;
+}
+
+.isf-file-browse:active {
+    transform: translateY(1px);
+}
+
+/* =============================================================================
+   File List
+   ============================================================================= */
+
+.isf-file-list {
+    margin-top: 20px;
+}
+
+.isf-file-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    transition: all 0.2s ease;
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.isf-file-item:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.isf-file-item.isf-file-uploaded {
+    border-color: #48bb78;
+    background: #f0fff4;
+}
+
+.isf-file-item.isf-file-error {
+    border-color: #fc8181;
+    background: #fff5f5;
+}
+
+/* File Preview */
+.isf-file-preview {
+    flex-shrink: 0;
+    width: 60px;
+    height: 60px;
+    border-radius: 4px;
+    overflow: hidden;
+    background: #f7fafc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.isf-file-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.isf-file-icon {
+    color: #cbd5e0;
+}
+
+.isf-file-icon .dashicons {
+    width: 40px;
+    height: 40px;
+    font-size: 40px;
+}
+
+/* File Info */
+.isf-file-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.isf-file-name {
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.isf-file-size {
+    font-size: 13px;
+    color: #718096;
+    margin-bottom: 8px;
+}
+
+/* Progress Bar */
+.isf-file-progress {
+    margin-top: 8px;
+}
+
+.isf-progress-bar {
+    height: 4px;
+    background: #e2e8f0;
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 4px;
+}
+
+.isf-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #2271b1 0%, #4299e1 100%);
+    border-radius: 2px;
+    transition: width 0.3s ease;
+    animation: progress-shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes progress-shimmer {
+    0% {
+        background-position: -100px 0;
+    }
+    100% {
+        background-position: 100px 0;
+    }
+}
+
+.isf-progress-text {
+    font-size: 12px;
+    color: #718096;
+    font-weight: 600;
+}
+
+.isf-upload-complete {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #48bb78;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.isf-upload-complete .dashicons {
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+}
+
+.isf-upload-error {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #fc8181;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.isf-upload-error .dashicons {
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+}
+
+/* Remove Button */
+.isf-file-remove {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.isf-file-remove:hover {
+    background: #fc8181;
+    border-color: #fc8181;
+    color: #fff;
+}
+
+.isf-file-remove .dashicons {
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+}
+
+/* Error Messages */
+.isf-file-error-message {
+    margin-top: 10px;
+    padding: 12px 15px;
+    background: #fff5f5;
+    border-left: 4px solid #fc8181;
+    border-radius: 4px;
+    color: #c53030;
+    font-size: 14px;
+    animation: slideIn 0.3s ease;
+}
+
+/* =============================================================================
+   Mobile Responsive
+   ============================================================================= */
+
+@media (max-width: 768px) {
+    .isf-file-dropzone {
+        padding: 30px 15px;
+    }
+
+    .isf-dropzone-icon {
+        font-size: 36px;
+        margin-bottom: 10px;
+    }
+
+    .isf-dropzone-icon .dashicons {
+        width: 36px;
+        height: 36px;
+        font-size: 36px;
+    }
+
+    .isf-dropzone-text {
+        font-size: 14px;
+    }
+
+    .isf-dropzone-hint {
+        font-size: 12px;
+    }
+
+    .isf-file-item {
+        padding: 12px;
+        gap: 10px;
+    }
+
+    .isf-file-preview {
+        width: 50px;
+        height: 50px;
+    }
+
+    .isf-file-icon .dashicons {
+        width: 32px;
+        height: 32px;
+        font-size: 32px;
+    }
+
+    .isf-file-name {
+        font-size: 14px;
+    }
+
+    .isf-file-size {
+        font-size: 12px;
+    }
+}
+
+/* =============================================================================
+   Accessibility
+   ============================================================================= */
+
+.isf-file-browse:focus,
+.isf-file-remove:focus {
+    outline: 2px solid #2271b1;
+    outline-offset: 2px;
+}
+
+.isf-file-dropzone:focus-within {
+    border-color: #2271b1;
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+    .isf-file-dropzone {
+        border-width: 3px;
+    }
+
+    .isf-file-item {
+        border-width: 2px;
+    }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    .isf-file-item,
+    .isf-file-error-message,
+    .isf-dropzone-icon,
+    .isf-progress-fill {
+        animation: none !important;
+        transition: none !important;
+    }
+}

@@ -1,0 +1,568 @@
+/**
+ * Enhanced Form Styles
+ *
+ * Improved validation UI, accessibility, mobile responsiveness.
+ *
+ * @package FormFlow
+ * @since 2.8.0
+ */
+
+/* =============================================================================
+   Progress Bar
+   ============================================================================= */
+
+.isf-form-progress {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.isf-progress-bar {
+    height: 8px;
+    background: #e2e8f0;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.isf-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #2271b1 0%, #4299e1 100%);
+    border-radius: 4px;
+    transition: width 0.5s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.isf-progress-fill::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.3) 50%,
+        transparent 100%
+    );
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+.isf-progress-text {
+    text-align: center;
+    font-size: 14px;
+    color: #4a5568;
+    font-weight: 600;
+}
+
+/* =============================================================================
+   Field Validation States
+   ============================================================================= */
+
+.isf-field-wrapper {
+    position: relative;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+.isf-field-wrapper.isf-field-has-error {
+    animation: shake 0.5s ease;
+}
+
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-5px);
+    }
+    75% {
+        transform: translateX(5px);
+    }
+}
+
+.isf-field-wrapper label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #2d3748;
+    font-size: 14px;
+}
+
+.isf-field-wrapper label .required {
+    color: #e53e3e;
+    margin-left: 2px;
+}
+
+.isf-field-wrapper input:not([type="checkbox"]):not([type="radio"]),
+.isf-field-wrapper select,
+.isf-field-wrapper textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 15px;
+    color: #2d3748;
+    background: #fff;
+    transition: all 0.2s ease;
+}
+
+.isf-field-wrapper input:focus,
+.isf-field-wrapper select:focus,
+.isf-field-wrapper textarea:focus {
+    outline: none;
+    border-color: #2271b1;
+    box-shadow: 0 0 0 3px rgba(34, 113, 177, 0.1);
+}
+
+.isf-field-has-error input,
+.isf-field-has-error select,
+.isf-field-has-error textarea {
+    border-color: #fc8181 !important;
+}
+
+.isf-field-has-error input:focus,
+.isf-field-has-error select:focus,
+.isf-field-has-error textarea:focus {
+    box-shadow: 0 0 0 3px rgba(252, 129, 129, 0.1) !important;
+}
+
+.isf-field-error {
+    display: block;
+    margin-top: 6px;
+    font-size: 13px;
+    color: #e53e3e;
+    font-weight: 500;
+    min-height: 20px;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.isf-field-description {
+    margin-top: 6px;
+    font-size: 13px;
+    color: #718096;
+    line-height: 1.5;
+}
+
+/* =============================================================================
+   Form-Level Errors
+   ============================================================================= */
+
+.isf-form-errors {
+    margin-bottom: 20px;
+    padding: 16px 20px;
+    background: #fff5f5;
+    border-left: 4px solid #fc8181;
+    border-radius: 6px;
+    animation: slideDown 0.3s ease;
+}
+
+.isf-error-message {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #c53030;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.isf-error-message .dashicons {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+}
+
+/* =============================================================================
+   Success Message
+   ============================================================================= */
+
+.isf-success-message {
+    text-align: center;
+    padding: 60px 40px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    animation: fadeInUp 0.5s ease;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.isf-success-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+    background: #c6f6d5;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.isf-success-icon .dashicons {
+    width: 48px;
+    height: 48px;
+    font-size: 48px;
+    color: #38a169;
+}
+
+.isf-success-message h3 {
+    margin: 0 0 10px;
+    font-size: 24px;
+    color: #2d3748;
+}
+
+.isf-success-message p {
+    margin: 0;
+    font-size: 16px;
+    color: #4a5568;
+}
+
+/* =============================================================================
+   Loading State
+   ============================================================================= */
+
+.isf-btn-submit.isf-loading {
+    position: relative;
+    color: transparent !important;
+    pointer-events: none;
+}
+
+.isf-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+/* =============================================================================
+   Form Buttons
+   ============================================================================= */
+
+.isf-form-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.isf-btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.isf-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(34, 113, 177, 0.2);
+}
+
+.isf-btn-primary {
+    background: #2271b1;
+    color: #fff;
+}
+
+.isf-btn-primary:hover:not(:disabled) {
+    background: #135e96;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(34, 113, 177, 0.2);
+}
+
+.isf-btn-primary:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.isf-btn-secondary {
+    background: #fff;
+    color: #2271b1;
+    border: 2px solid #2271b1;
+}
+
+.isf-btn-secondary:hover:not(:disabled) {
+    background: #f7fafc;
+}
+
+.isf-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* =============================================================================
+   Mobile Responsive
+   ============================================================================= */
+
+@media (max-width: 768px) {
+    /* Progress bar */
+    .isf-form-progress {
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+
+    /* Fields stack vertically */
+    .isf-field-wrapper {
+        margin-bottom: 16px;
+    }
+
+    .isf-field-wrapper input,
+    .isf-field-wrapper select,
+    .isf-field-wrapper textarea {
+        padding: 14px 16px;
+        font-size: 16px; /* Prevents zoom on iOS */
+    }
+
+    /* Touch-friendly buttons */
+    .isf-form-actions {
+        flex-direction: column-reverse;
+        gap: 10px;
+    }
+
+    .isf-btn {
+        width: 100%;
+        padding: 14px 24px;
+        font-size: 16px;
+    }
+
+    /* Success message */
+    .isf-success-message {
+        padding: 40px 20px;
+    }
+
+    .isf-success-icon {
+        width: 64px;
+        height: 64px;
+    }
+
+    .isf-success-icon .dashicons {
+        width: 36px;
+        height: 36px;
+        font-size: 36px;
+    }
+
+    .isf-success-message h3 {
+        font-size: 20px;
+    }
+
+    .isf-success-message p {
+        font-size: 15px;
+    }
+}
+
+/* Tablet adjustments */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .isf-field-wrapper input,
+    .isf-field-wrapper select,
+    .isf-field-wrapper textarea {
+        font-size: 15px;
+    }
+}
+
+/* =============================================================================
+   Floating Labels (Optional Enhancement)
+   ============================================================================= */
+
+.isf-floating-label {
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.isf-floating-label input,
+.isf-floating-label textarea {
+    padding: 20px 16px 8px;
+}
+
+.isf-floating-label label {
+    position: absolute;
+    left: 16px;
+    top: 16px;
+    color: #718096;
+    font-size: 15px;
+    font-weight: 400;
+    transition: all 0.2s ease;
+    pointer-events: none;
+    margin: 0;
+}
+
+.isf-floating-label input:focus + label,
+.isf-floating-label input:not(:placeholder-shown) + label,
+.isf-floating-label textarea:focus + label,
+.isf-floating-label textarea:not(:placeholder-shown) + label {
+    top: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #2271b1;
+}
+
+/* =============================================================================
+   Accessibility Enhancements
+   ============================================================================= */
+
+/* Screen reader only content */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+/* Focus visible for keyboard navigation */
+.isf-form *:focus-visible {
+    outline: 2px solid #2271b1;
+    outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .isf-field-wrapper input,
+    .isf-field-wrapper select,
+    .isf-field-wrapper textarea {
+        border-width: 3px;
+    }
+
+    .isf-btn {
+        border-width: 2px;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .isf-progress-fill::before {
+        animation: none;
+    }
+}
+
+/* Dark mode support (optional) */
+@media (prefers-color-scheme: dark) {
+    .isf-form {
+        background: #1a202c;
+        color: #e2e8f0;
+    }
+
+    .isf-field-wrapper label {
+        color: #e2e8f0;
+    }
+
+    .isf-field-wrapper input,
+    .isf-field-wrapper select,
+    .isf-field-wrapper textarea {
+        background: #2d3748;
+        border-color: #4a5568;
+        color: #e2e8f0;
+    }
+
+    .isf-field-wrapper input:focus,
+    .isf-field-wrapper select:focus,
+    .isf-field-wrapper textarea:focus {
+        border-color: #4299e1;
+    }
+
+    .isf-field-description {
+        color: #a0aec0;
+    }
+
+    .isf-progress-bar {
+        background: #2d3748;
+    }
+
+    .isf-success-message {
+        background: #1a202c;
+    }
+}
+
+/* =============================================================================
+   Step Transitions
+   ============================================================================= */
+
+.isf-step {
+    display: none;
+}
+
+.isf-step.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Swipe gesture support for mobile */
+@media (max-width: 768px) {
+    .isf-form-container {
+        touch-action: pan-y;
+    }
+
+    .isf-step {
+        transition: transform 0.3s ease;
+    }
+}

@@ -1,0 +1,435 @@
+/**
+ * Advanced Form Fields - Styles
+ *
+ * Styles for advanced field types:
+ * - Likert Scale
+ * - Slider
+ * - reCAPTCHA v3
+ * - Repeater
+ * - Star Rating
+ * - Date Range
+ * - Address Autocomplete
+ * - Number Stepper
+ * - Color Picker
+ *
+ * @package FormFlow
+ * @since 2.7.0
+ */
+
+/* Likert Scale */
+.isf-likert-scale {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.isf-likert-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+.isf-likert-radio {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.isf-likert-box {
+    width: 50px;
+    height: 50px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    background: #fff;
+}
+
+.isf-likert-box:hover,
+.isf-likert-box.isf-likert-hover {
+    border-color: #2271b1;
+    background: #f0f6fc;
+}
+
+.isf-likert-radio:checked + .isf-likert-box,
+.isf-likert-box.isf-likert-selected {
+    border-color: #2271b1;
+    background: #2271b1;
+    color: #fff;
+}
+
+.isf-likert-label {
+    margin-top: 5px;
+    font-size: 12px;
+    text-align: center;
+    color: #666;
+}
+
+/* Slider */
+.isf-slider-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.isf-slider {
+    flex: 1;
+    height: 6px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: #e0e0e0;
+    border-radius: 3px;
+    outline: none;
+}
+
+.isf-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #2271b1;
+    cursor: pointer;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.isf-slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: #2271b1;
+    cursor: pointer;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.isf-slider:focus::-webkit-slider-thumb {
+    box-shadow: 0 0 0 3px rgba(34, 113, 177, 0.3);
+}
+
+.isf-slider:focus::-moz-range-thumb {
+    box-shadow: 0 0 0 3px rgba(34, 113, 177, 0.3);
+}
+
+.isf-slider-value {
+    min-width: 60px;
+    text-align: center;
+    font-weight: 600;
+    color: #2271b1;
+}
+
+/* reCAPTCHA */
+.isf-recaptcha-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #666;
+}
+
+.isf-recaptcha-notice {
+    padding: 10px;
+    margin: 10px 0;
+}
+
+/* Repeater */
+.isf-repeater {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 15px;
+    background: #f9f9f9;
+}
+
+.isf-repeater-items {
+    margin-bottom: 15px;
+}
+
+.isf-repeater-item {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 15px;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.isf-repeater-item-fields {
+    margin-bottom: 10px;
+}
+
+.isf-repeater-remove {
+    color: #dc3545;
+    text-decoration: none;
+}
+
+.isf-repeater-remove:hover {
+    color: #a02622;
+}
+
+.isf-repeater-add {
+    width: 100%;
+}
+
+/* Star Rating */
+.isf-star-rating {
+    display: inline-flex;
+    gap: 5px;
+}
+
+.isf-star-label {
+    cursor: pointer;
+    display: inline-block;
+}
+
+.isf-star-input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.isf-star {
+    display: inline-block;
+    font-size: 24px;
+    color: #ddd;
+    transition: color 0.2s ease;
+}
+
+.isf-star-size-small .isf-star {
+    font-size: 18px;
+}
+
+.isf-star-size-medium .isf-star {
+    font-size: 24px;
+}
+
+.isf-star-size-large .isf-star {
+    font-size: 32px;
+}
+
+.isf-star:hover,
+.isf-star-hover {
+    color: #ffd700;
+}
+
+.isf-star-input:checked ~ .isf-star,
+.isf-star-selected {
+    color: #ffd700;
+}
+
+/* Date Range */
+.isf-date-range-wrapper {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 15px;
+    background: #f9f9f9;
+}
+
+.isf-date-range-inputs {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.isf-date-range-start,
+.isf-date-range-end {
+    flex: 1;
+}
+
+.isf-date-range-separator {
+    color: #666;
+    font-weight: 500;
+}
+
+.isf-date-range-presets {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.isf-date-preset {
+    font-size: 12px;
+    padding: 4px 8px;
+}
+
+/* Address Autocomplete */
+.isf-address-autocomplete {
+    width: 100%;
+}
+
+.pac-container {
+    z-index: 10000 !important;
+    font-family: inherit;
+}
+
+/* Number Stepper */
+.isf-number-stepper {
+    display: inline-flex;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.isf-stepper-btn {
+    background: #f9f9f9;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.isf-stepper-btn:hover:not(:disabled) {
+    background: #e9e9e9;
+}
+
+.isf-stepper-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.isf-stepper-input {
+    border: none;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    text-align: center;
+    width: 80px;
+    padding: 8px;
+    -moz-appearance: textfield;
+}
+
+.isf-stepper-input::-webkit-outer-spin-button,
+.isf-stepper-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.isf-stepper-size-small .isf-stepper-btn {
+    padding: 4px 8px;
+}
+
+.isf-stepper-size-small .isf-stepper-input {
+    width: 60px;
+    padding: 4px;
+    font-size: 14px;
+}
+
+.isf-stepper-size-large .isf-stepper-btn {
+    padding: 12px 16px;
+}
+
+.isf-stepper-size-large .isf-stepper-input {
+    width: 100px;
+    padding: 12px;
+    font-size: 18px;
+}
+
+/* Color Picker */
+.isf-color-picker-wrapper {
+    display: inline-block;
+}
+
+.isf-color-input-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.isf-color-input {
+    width: 60px;
+    height: 40px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 2px;
+}
+
+.isf-color-text {
+    width: 120px;
+    text-transform: uppercase;
+}
+
+.isf-color-presets {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.isf-color-presets-label {
+    font-size: 12px;
+    color: #666;
+    margin-right: 5px;
+}
+
+.isf-color-preset-btn {
+    width: 30px;
+    height: 30px;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.2s ease;
+}
+
+.isf-color-preset-btn:hover {
+    border-color: #2271b1;
+    transform: scale(1.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .isf-likert-scale {
+        justify-content: center;
+    }
+
+    .isf-date-range-inputs {
+        flex-direction: column;
+    }
+
+    .isf-date-range-separator {
+        transform: rotate(90deg);
+    }
+
+    .isf-number-stepper {
+        width: 100%;
+    }
+
+    .isf-stepper-input {
+        flex: 1;
+    }
+}
+
+/* Accessibility improvements */
+.isf-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Focus states for accessibility */
+.isf-likert-radio:focus + .isf-likert-box,
+.isf-star-input:focus + .isf-star,
+.isf-stepper-btn:focus,
+.isf-color-preset-btn:focus {
+    outline: 2px solid #2271b1;
+    outline-offset: 2px;
+}

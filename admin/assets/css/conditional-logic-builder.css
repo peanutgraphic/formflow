@@ -1,0 +1,330 @@
+/**
+ * Visual Conditional Logic Builder - Styles
+ *
+ * Flowchart-style UI for building conditional logic rules.
+ *
+ * @package FormFlow
+ * @since 2.7.0
+ */
+
+/* Modal Overlay */
+.isf-logic-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 100000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* Modal Container */
+.isf-logic-modal {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    max-width: 900px;
+    width: 100%;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Modal Header */
+.isf-logic-modal-header {
+    padding: 20px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.isf-logic-modal-header h2 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.isf-close-logic-modal {
+    background: none;
+    border: none;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+    color: #666;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+}
+
+.isf-close-logic-modal:hover {
+    color: #000;
+}
+
+/* Modal Body */
+.isf-logic-modal-body {
+    padding: 20px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.isf-logic-info {
+    background: #f0f6fc;
+    border-left: 4px solid #2271b1;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+}
+
+.isf-logic-info p {
+    margin: 0;
+    font-size: 14px;
+}
+
+/* Logic Canvas */
+.isf-logic-canvas {
+    min-height: 200px;
+}
+
+.isf-logic-rules {
+    margin-bottom: 20px;
+}
+
+/* Individual Rule */
+.isf-logic-rule {
+    background: #fff;
+    border: 2px solid #2271b1;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.isf-logic-rule-header {
+    background: #2271b1;
+    color: #fff;
+    padding: 12px 15px;
+    border-radius: 6px 6px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.isf-logic-rule-header h4 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.isf-remove-rule {
+    color: #fff;
+    text-decoration: none;
+    opacity: 0.8;
+}
+
+.isf-remove-rule:hover {
+    opacity: 1;
+}
+
+.isf-logic-rule-body {
+    padding: 20px;
+}
+
+/* Conditions Section */
+.isf-logic-conditions {
+    margin-bottom: 20px;
+}
+
+.isf-logic-label {
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.isf-logic-conditions-list {
+    position: relative;
+    padding-left: 30px;
+}
+
+/* Individual Condition Node */
+.isf-logic-condition {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.isf-condition-node {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+}
+
+.isf-condition-node::before {
+    content: '';
+    position: absolute;
+    left: -30px;
+    top: 50%;
+    width: 20px;
+    height: 2px;
+    background: #2271b1;
+}
+
+.isf-condition-node select,
+.isf-condition-node input {
+    flex: 1;
+    min-width: 150px;
+}
+
+.isf-remove-condition {
+    color: #dc3545;
+    flex-shrink: 0;
+}
+
+/* Connector between conditions */
+.isf-condition-connector {
+    position: absolute;
+    left: -20px;
+    top: 100%;
+    width: 2px;
+    height: 15px;
+    background: #2271b1;
+}
+
+.isf-logic-condition:last-child .isf-condition-connector {
+    display: none;
+}
+
+/* Condition Logic Selector */
+.isf-logic-condition-logic {
+    margin: 15px 0;
+    padding-left: 30px;
+}
+
+.isf-condition-logic {
+    width: 100%;
+    max-width: 300px;
+    font-weight: 600;
+}
+
+/* Action Section */
+.isf-logic-action {
+    background: #e8f5e9;
+    border: 1px solid #4caf50;
+    border-radius: 6px;
+    padding: 15px;
+}
+
+.isf-logic-action .isf-logic-label {
+    color: #2e7d32;
+}
+
+.isf-action-type {
+    width: 100%;
+    max-width: 300px;
+    margin-bottom: 10px;
+}
+
+.isf-action-value {
+    width: 100%;
+    max-width: 300px;
+}
+
+/* Buttons */
+.isf-add-rule {
+    margin-top: 10px;
+}
+
+.isf-add-condition {
+    margin-top: 10px;
+    font-size: 13px;
+}
+
+/* Modal Footer */
+.isf-logic-modal-footer {
+    padding: 15px 20px;
+    border-top: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .isf-logic-modal {
+        max-width: 100%;
+        height: 100%;
+        max-height: 100%;
+        border-radius: 0;
+    }
+
+    .isf-condition-node {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .isf-condition-node select,
+    .isf-condition-node input {
+        width: 100%;
+    }
+
+    .isf-logic-conditions-list {
+        padding-left: 15px;
+    }
+
+    .isf-condition-node::before {
+        left: -15px;
+        width: 10px;
+    }
+}
+
+/* Flowchart Visual Enhancements */
+.isf-logic-rule {
+    transition: all 0.3s ease;
+}
+
+.isf-logic-rule:hover {
+    box-shadow: 0 4px 12px rgba(34, 113, 177, 0.2);
+    transform: translateY(-2px);
+}
+
+.isf-condition-node {
+    transition: all 0.2s ease;
+}
+
+.isf-condition-node:hover {
+    background: #fff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Animation for newly added elements */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.isf-logic-rule,
+.isf-logic-condition {
+    animation: slideIn 0.3s ease;
+}
+
+/* Accessibility */
+.isf-close-logic-modal:focus,
+.isf-remove-rule:focus,
+.isf-remove-condition:focus {
+    outline: 2px solid #2271b1;
+    outline-offset: 2px;
+}
