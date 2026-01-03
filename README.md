@@ -1,6 +1,6 @@
 # FormFlow (FormFlow Pro)
 
-**Version:** 2.3.0
+**Version:** 2.8.3
 **Requires WordPress:** 6.0+
 **Requires PHP:** 8.0+
 **License:** GPL v2 or later
@@ -560,6 +560,39 @@ See `includes/class-hooks.php` for full documentation. Key hooks include:
 - `isf_sms_message` - Modify SMS content
 
 ## Changelog
+
+### 2.8.3 (2025-12-29)
+- Fixed scheduled reports cron error (optional frequency parameter)
+- Database class refactored with 8 traits for better maintainability
+- File reduced from 3,110 to 1,405 lines
+
+### 2.8.2 (2025-12-28)
+- Fixed translation loading warning for WordPress 6.7+ (init hook)
+
+### 2.8.0 (2025-12-27)
+- React SPA admin interface
+- Enhanced analytics dashboard
+- Improved form builder UI
+
+### 2.7.0 (2025-12-20)
+- Added GDPR compliance tools
+- Data retention policy management
+- Audit logging for admin actions
+
+### 2.6.0 (2025-12-15)
+- Resume token feature for "save and continue later"
+- Retry queue for failed API submissions
+- Webhook management improvements
+
+### 2.5.0 (2025-12-14)
+- Scheduled reports with email delivery
+- Enhanced API usage tracking
+- Rate limiting improvements
+
+### 2.4.0 (2025-12-13)
+- Database trait architecture
+- Improved code organization
+- Performance optimizations
 
 ### 2.3.0 (2025-12-13)
 **Analytics & Attribution Module**

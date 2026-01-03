@@ -33,7 +33,9 @@ $tables = [
 
 // Drop tables (in correct order due to foreign keys)
 foreach ($tables as $table) {
-    $wpdb->query("DROP TABLE IF EXISTS {$table}");
+    // Table names are safe (constructed from wpdb->prefix + known strings)
+    // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    $wpdb->query( $wpdb->prepare( "DROP TABLE IF EXISTS %i", $table ) );
 }
 
 // Deactivate license on Peanut License Server before deleting data
@@ -65,14 +67,39 @@ delete_option('formflow_license_data');
 delete_option('formflow_license_last_check');
 delete_option('formflow_whitelist_ips');
 
-// Delete transients
-$wpdb->query("DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_isf_%'");
-$wpdb->query("DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_timeout_isf_%'");
-$wpdb->query("DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_formflow_%'");
-$wpdb->query("DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_timeout_formflow_%'");
+// Delete transients using proper prepared statements
+$wpdb->query(
+    $wpdb->prepare(
+        "DELETE FROM {$wpdb->options} WHERE option_name LIKE %s",
+        $wpdb->esc_like( '_transient_isf_' ) . '%'
+    )
+);
+$wpdb->query(
+    $wpdb->prepare(
+        "DELETE FROM {$wpdb->options} WHERE option_name LIKE %s",
+        $wpdb->esc_like( '_transient_timeout_isf_' ) . '%'
+    )
+);
+$wpdb->query(
+    $wpdb->prepare(
+        "DELETE FROM {$wpdb->options} WHERE option_name LIKE %s",
+        $wpdb->esc_like( '_transient_formflow_' ) . '%'
+    )
+);
+$wpdb->query(
+    $wpdb->prepare(
+        "DELETE FROM {$wpdb->options} WHERE option_name LIKE %s",
+        $wpdb->esc_like( '_transient_timeout_formflow_' ) . '%'
+    )
+);
 
 // Delete user meta
-$wpdb->query("DELETE FROM {$wpdb->usermeta} WHERE meta_key LIKE 'isf_%'");
+$wpdb->query(
+    $wpdb->prepare(
+        "DELETE FROM {$wpdb->usermeta} WHERE meta_key LIKE %s",
+        $wpdb->esc_like( 'isf_' ) . '%'
+    )
+);
 
 // Clear any scheduled cron events
 wp_clear_scheduled_hook('isf_cleanup_sessions');
