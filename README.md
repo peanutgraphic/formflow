@@ -1,6 +1,6 @@
 # FormFlow (FormFlow Pro)
 
-**Version:** 2.8.3
+**Version:** 2.8.4
 **Requires WordPress:** 6.0+
 **Requires PHP:** 8.0+
 **License:** GPL v2 or later

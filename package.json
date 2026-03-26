@@ -1,0 +1,12 @@
+{
+  "name": "formflow",
+  "version": "2.8.4",
+  "description": "FormFlow Pro - White-label API-integrated WordPress plugin for multi-step enrollment and scheduling forms",
+  "private": true,
+  "license": "GPL-2.0-or-later",
+  "scripts": {
+    "test": "npm run test:php",
+    "test:php": "cd . && composer test"
+  },
+  "devDependencies": {}
+}
