@@ -98,7 +98,7 @@ class DocumentUpload {
             'stored_name' => $filename,
             'file_path' => $filepath,
             'file_url' => $upload_dir['url'] . '/' . $filename,
-            'file_type' => $file['type'],
+            'file_type' => $this->get_validated_mime_type($file),
             'file_size' => $file['size'],
         ]);
 
@@ -445,6 +445,19 @@ class DocumentUpload {
 
         require_once ABSPATH . 'wp-admin/includes/upgrade.php';
         dbDelta($sql);
+    }
+
+    /**
+     * Get server-validated MIME type instead of trusting client-supplied type.
+     */
+    private function get_validated_mime_type(array $file): string {
+        $filetype = wp_check_filetype($file['name']);
+        if (!empty($filetype['type'])) {
+            return $filetype['type'];
+        }
+
+        // Fallback to application/octet-stream if type cannot be determined
+        return 'application/octet-stream';
     }
 
     /**

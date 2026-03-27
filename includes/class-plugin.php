@@ -69,6 +69,10 @@ class Plugin {
         require_once ISF_PLUGIN_DIR . 'includes/analytics/class-attribution-exporter.php';
         require_once ISF_PLUGIN_DIR . 'includes/api/class-handoff-endpoint.php';
 
+        // ML/Prediction classes
+        require_once ISF_PLUGIN_DIR . 'includes/ml/class-form-prediction.php';
+        require_once ISF_PLUGIN_DIR . 'includes/ml/class-form-prediction-api.php';
+
         // Peanut Suite integration (loads after plugins_loaded for proper detection)
         require_once ISF_PLUGIN_DIR . 'includes/class-peanut-integration.php';
         add_action('plugins_loaded', function() {
@@ -262,6 +266,10 @@ class Plugin {
 
         $completion_receiver = new Analytics\CompletionReceiver();
         $completion_receiver->register_routes();
+
+        // Register ML prediction API routes
+        $prediction_api = new ML\FormPredictionApi();
+        $prediction_api->register_routes();
     }
 
     /**
@@ -411,6 +419,7 @@ class Plugin {
         add_action('isf_process_retry_queue', [$this, 'process_retry_queue']);
         add_action('isf_send_scheduled_reports', [$this, 'send_scheduled_reports']);
         add_action('isf_apply_retention_policy', [$this, 'apply_retention_policy']);
+        add_action('peanut_ml_formflow_train', [$this, 'train_ml_model']);
 
         // Ensure all scheduled events are registered (reschedule if missing)
         add_action('init', [$this, 'ensure_cron_events_scheduled']);
@@ -446,6 +455,10 @@ class Plugin {
 
         if (!wp_next_scheduled('isf_apply_retention_policy')) {
             wp_schedule_event(time(), 'daily', 'isf_apply_retention_policy');
+        }
+
+        if (!wp_next_scheduled('peanut_ml_formflow_train')) {
+            wp_schedule_event(time(), 'weekly', 'peanut_ml_formflow_train');
         }
     }
 
@@ -558,5 +571,38 @@ class Plugin {
      */
     public function get_public(): ?Frontend\Frontend {
         return $this->public;
+    }
+
+    /**
+     * Train ML model (cron job)
+     *
+     * Triggered weekly to retrain form completion prediction model
+     * using accumulated historical form submission data.
+     */
+    public function train_ml_model(): void {
+        try {
+            $predictor = new ML\FormPrediction();
+
+            // Check if ML service is available before attempting training
+            if (!$predictor->is_available()) {
+                error_log('[FormFlow ML] ML service unavailable during scheduled training');
+                return;
+            }
+
+            // Trigger model training
+            $success = $predictor->train_model();
+
+            if ($success) {
+                // Log successful training
+                error_log('[FormFlow ML] Weekly model training triggered successfully');
+            } else {
+                error_log('[FormFlow ML] Failed to trigger model training');
+            }
+        } catch (\Exception $e) {
+            error_log(sprintf(
+                '[FormFlow ML] Exception during model training: %s',
+                $e->getMessage()
+            ));
+        }
     }
 }

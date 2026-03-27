@@ -706,6 +706,11 @@ class Activator {
         if (!wp_next_scheduled('isf_apply_retention_policy')) {
             wp_schedule_event(time(), 'daily', 'isf_apply_retention_policy');
         }
+
+        // ML model training - run weekly
+        if (!wp_next_scheduled('peanut_ml_formflow_train')) {
+            wp_schedule_event(time(), 'weekly', 'peanut_ml_formflow_train');
+        }
     }
 
     /**
