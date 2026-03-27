@@ -55,7 +55,9 @@ class Activator {
             );
 
             if (!$column_exists) {
+                // Table name is whitelisted and validated via ISF_TABLE_INSTANCES constant
                 $wpdb->query("ALTER TABLE {$table} ADD COLUMN embed_token VARCHAR(64) NULL AFTER test_mode");
+                // Column names are hardcoded, safe
                 $wpdb->query("ALTER TABLE {$table} ADD UNIQUE INDEX embed_token (embed_token)");
             }
         }
@@ -78,10 +80,12 @@ class Activator {
             );
 
             if (!$column_exists) {
+                // Table name is whitelisted and validated via ISF_TABLE_INSTANCES constant
                 $wpdb->query("ALTER TABLE {$table} ADD COLUMN display_order INT UNSIGNED DEFAULT 0 AFTER embed_token");
+                // Column names are hardcoded, safe
                 $wpdb->query("ALTER TABLE {$table} ADD INDEX display_order (display_order)");
 
-                // Set initial order based on id
+                // Set initial order based on id - column names are hardcoded, safe
                 $wpdb->query("UPDATE {$table} SET display_order = id");
             }
         }
@@ -104,6 +108,7 @@ class Activator {
             );
 
             // Add 'external' to ENUM if not already present
+            // Table name is whitelisted, ENUM values are hardcoded literals, safe
             if ($column_info && strpos($column_info->COLUMN_TYPE, 'external') === false) {
                 $wpdb->query("ALTER TABLE {$table} MODIFY COLUMN form_type ENUM('enrollment','scheduler','external') DEFAULT 'enrollment'");
             }
