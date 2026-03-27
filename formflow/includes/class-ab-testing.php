@@ -1,4 +1,6 @@
 <?php
+
+if ( ! defined( 'ABSPATH' ) ) { exit; }
 /**
  * A/B Testing Handler
  *
