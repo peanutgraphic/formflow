@@ -163,9 +163,33 @@ class AddressValidator {
     }
 
     /**
+     * Check per-IP rate limit for public REST endpoints.
+     *
+     * @param string $action Unique action identifier.
+     * @param int    $limit  Max requests per window.
+     * @param int    $window Time window in seconds.
+     * @return \WP_REST_Response|null Error response if exceeded, null if OK.
+     */
+    private function check_rest_rate_limit(string $action, int $limit = 30, int $window = 60): ?\WP_REST_Response {
+        $allowed = apply_filters(\ISF\Hooks::CHECK_RATE_LIMIT, true, $action, $limit, $window);
+        if (!$allowed) {
+            return new \WP_REST_Response(
+                ['error' => 'Too many requests. Please try again later.'],
+                429
+            );
+        }
+        return null;
+    }
+
+    /**
      * REST callback: Address autocomplete
      */
     public function rest_autocomplete(\WP_REST_Request $request): \WP_REST_Response {
+        $rate_limit_error = $this->check_rest_rate_limit('isf_address_autocomplete', 30, 60);
+        if ($rate_limit_error !== null) {
+            return $rate_limit_error;
+        }
+
         $input = $request->get_param('input');
         $session_token = $request->get_param('session_token');
 
@@ -182,6 +206,11 @@ class AddressValidator {
      * REST callback: Validate address
      */
     public function rest_validate(\WP_REST_Request $request): \WP_REST_Response {
+        $rate_limit_error = $this->check_rest_rate_limit('isf_address_validate', 20, 60);
+        if ($rate_limit_error !== null) {
+            return $rate_limit_error;
+        }
+
         $address = [
             'street' => $request->get_param('street'),
             'city' => $request->get_param('city'),
@@ -198,6 +227,11 @@ class AddressValidator {
      * REST callback: Get place details
      */
     public function rest_place_details(\WP_REST_Request $request): \WP_REST_Response {
+        $rate_limit_error = $this->check_rest_rate_limit('isf_address_place_details', 20, 60);
+        if ($rate_limit_error !== null) {
+            return $rate_limit_error;
+        }
+
         $place_id = $request->get_param('place_id');
         $session_token = $request->get_param('session_token');
 

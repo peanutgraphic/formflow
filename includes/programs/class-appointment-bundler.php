@@ -151,9 +151,33 @@ class AppointmentBundler {
     }
 
     /**
+     * Check per-IP rate limit for public REST endpoints.
+     *
+     * @param string $action Unique action identifier.
+     * @param int    $limit  Max requests per window.
+     * @param int    $window Time window in seconds.
+     * @return \WP_REST_Response|null Error response if exceeded, null if OK.
+     */
+    private function check_rest_rate_limit(string $action, int $limit = 20, int $window = 60): ?\WP_REST_Response {
+        $allowed = apply_filters(\ISF\Hooks::CHECK_RATE_LIMIT, true, $action, $limit, $window);
+        if (!$allowed) {
+            return new \WP_REST_Response(
+                ['error' => 'Too many requests. Please try again later.'],
+                429
+            );
+        }
+        return null;
+    }
+
+    /**
      * REST callback: Check if programs can be bundled
      */
     public function rest_check_bundle(\WP_REST_Request $request): \WP_REST_Response {
+        $rate_limit_error = $this->check_rest_rate_limit('isf_bundle_check', 20, 60);
+        if ($rate_limit_error !== null) {
+            return $rate_limit_error;
+        }
+
         $program_ids = $request->get_param('program_ids') ?: [];
 
         $result = $this->can_bundle_programs($program_ids);
@@ -171,6 +195,11 @@ class AppointmentBundler {
      * REST callback: Get available bundled time slots
      */
     public function rest_get_bundled_slots(\WP_REST_Request $request): \WP_REST_Response {
+        $rate_limit_error = $this->check_rest_rate_limit('isf_bundle_slots', 20, 60);
+        if ($rate_limit_error !== null) {
+            return $rate_limit_error;
+        }
+
         $program_ids = $request->get_param('program_ids') ?: [];
         $date = $request->get_param('date');
         $zip_code = $request->get_param('zip_code');
@@ -189,6 +218,11 @@ class AppointmentBundler {
      * REST callback: Create bundled appointment
      */
     public function rest_create_bundled_appointment(\WP_REST_Request $request): \WP_REST_Response {
+        $rate_limit_error = $this->check_rest_rate_limit('isf_bundle_create', 10, 60);
+        if ($rate_limit_error !== null) {
+            return $rate_limit_error;
+        }
+
         $data = [
             'submission_id' => $request->get_param('submission_id'),
             'program_ids' => $request->get_param('program_ids') ?: [],
@@ -234,6 +268,11 @@ class AppointmentBundler {
      * REST callback: Reschedule bundled appointment
      */
     public function rest_reschedule_bundled_appointment(\WP_REST_Request $request): \WP_REST_Response {
+        $rate_limit_error = $this->check_rest_rate_limit('isf_bundle_reschedule', 5, 60);
+        if ($rate_limit_error !== null) {
+            return $rate_limit_error;
+        }
+
         $bundle_id = $request->get_param('id');
         $new_date = $request->get_param('date');
         $new_time_slot = $request->get_param('time_slot');
@@ -251,6 +290,11 @@ class AppointmentBundler {
      * REST callback: Cancel bundled appointment
      */
     public function rest_cancel_bundled_appointment(\WP_REST_Request $request): \WP_REST_Response {
+        $rate_limit_error = $this->check_rest_rate_limit('isf_bundle_cancel', 5, 60);
+        if ($rate_limit_error !== null) {
+            return $rate_limit_error;
+        }
+
         $bundle_id = $request->get_param('id');
         $reason = $request->get_param('reason');
 

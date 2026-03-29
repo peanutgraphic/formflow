@@ -45,10 +45,12 @@ class Deactivator {
     private static function clear_transients(): void {
         global $wpdb;
 
-        $wpdb->query(
-            "DELETE FROM {$wpdb->options}
-            WHERE option_name LIKE '_transient_isf_%'
-            OR option_name LIKE '_transient_timeout_isf_%'"
+        $wpdb->query( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
+            $wpdb->prepare(
+                "DELETE FROM {$wpdb->options} WHERE option_name LIKE %s OR option_name LIKE %s",
+                '_transient_isf_%',
+                '_transient_timeout_isf_%'
+            )
         );
     }
 }

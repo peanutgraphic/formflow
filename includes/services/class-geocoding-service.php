@@ -160,9 +160,33 @@ class GeocodingService {
     }
 
     /**
+     * Check per-IP rate limit for public REST endpoints.
+     *
+     * @param string $action Unique action identifier.
+     * @param int    $limit  Max requests per window.
+     * @param int    $window Time window in seconds.
+     * @return \WP_REST_Response|null Error response if exceeded, null if OK.
+     */
+    private function check_rest_rate_limit(string $action, int $limit = 20, int $window = 60): ?\WP_REST_Response {
+        $allowed = apply_filters(\ISF\Hooks::CHECK_RATE_LIMIT, true, $action, $limit, $window);
+        if (!$allowed) {
+            return new \WP_REST_Response(
+                ['error' => 'Too many requests. Please try again later.'],
+                429
+            );
+        }
+        return null;
+    }
+
+    /**
      * REST callback: Geocode an address
      */
     public function rest_geocode(\WP_REST_Request $request): \WP_REST_Response {
+        $rate_limit_error = $this->check_rest_rate_limit('isf_geocode', 20, 60);
+        if ($rate_limit_error !== null) {
+            return $rate_limit_error;
+        }
+
         $address = [
             'street' => $request->get_param('street'),
             'city' => $request->get_param('city'),
@@ -191,6 +215,11 @@ class GeocodingService {
      * REST callback: Check service territory
      */
     public function rest_check_territory(\WP_REST_Request $request): \WP_REST_Response {
+        $rate_limit_error = $this->check_rest_rate_limit('isf_territory_check', 20, 60);
+        if ($rate_limit_error !== null) {
+            return $rate_limit_error;
+        }
+
         $latitude = $request->get_param('latitude');
         $longitude = $request->get_param('longitude');
         $utility = $request->get_param('utility');
