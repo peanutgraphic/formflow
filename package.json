@@ -5,8 +5,9 @@
   "private": true,
   "license": "GPL-2.0-or-later",
   "scripts": {
-    "test": "npm run test:php",
-    "test:php": "cd . && composer test"
+    "test": "npm run test:php && npm run test:a11y",
+    "test:php": "cd . && composer test",
+    "test:a11y": "bash scripts/a11y-check.sh"
   },
   "devDependencies": {}
 }
