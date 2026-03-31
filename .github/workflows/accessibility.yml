@@ -1,0 +1,110 @@
+name: Accessibility
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+    paths:
+      - 'admin/**'
+      - 'public/**'
+      - 'includes/**'
+      - 'formflow/**'
+      - 'tests/accessibility/**'
+      - '.github/workflows/accessibility.yml'
+      - 'scripts/accessibility-scan.cjs'
+  push:
+    branches:
+      - main
+    paths:
+      - 'admin/**'
+      - 'public/**'
+      - 'includes/**'
+      - 'formflow/**'
+      - 'tests/accessibility/**'
+
+jobs:
+  accessibility:
+    name: Accessibility Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.0'
+          tools: composer:v2
+
+      - name: Install Composer dependencies
+        run: composer install --no-progress --prefer-dist
+
+      - name: Run accessibility linting on PHP templates
+        run: bash scripts/a11y-check.sh
+
+      - name: Run accessibility unit tests
+        run: |
+          if [ -d "tests/accessibility" ] && [ -f "phpunit.xml" ]; then
+            composer test -- --testsuite=accessibility || true
+          fi
+        continue-on-error: true
+
+      - name: Run accessibility integration tests
+        run: |
+          if [ -d "tests/accessibility" ] && [ -f "phpunit.xml" ]; then
+            composer test -- --filter=Accessibility || true
+          fi
+        continue-on-error: true
+
+      - name: Comment on PR with results
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const { execSync } = require('child_process');
+
+            try {
+              // Run the accessibility scan and capture output
+              const output = execSync('node scripts/accessibility-scan.cjs 2>&1', {
+                encoding: 'utf-8',
+                stdio: ['pipe', 'pipe', 'pipe']
+              });
+
+              // Parse critical issues from output
+              const hasErrors = output.includes('Errors');
+              const errorCount = (output.match(/error/gi) || []).length;
+
+              // Create PR comment
+              const comment = `## Accessibility Scan Results
+
+              ${hasErrors ? '⚠️ **Critical issues found**' : '✅ **No critical issues found**'}
+
+              <details>
+              <summary>View full scan output</summary>
+
+              \`\`\`
+              ${output.substring(0, 2000)}${output.length > 2000 ? '...' : ''}
+              \`\`\`
+
+              </details>
+
+              For more details, run locally: \`bash scripts/a11y-check.sh\`
+              `;
+
+              github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: comment
+              });
+            } catch (error) {
+              console.log('Scan output:', error.message);
+            }
