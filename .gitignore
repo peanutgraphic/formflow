@@ -3,3 +3,9 @@ node_modules/
 vendor/
 *.log
 .env
+
+# --- added by gitignore-sync on 2026-04-13 ---
+.claude/settings.local.json
+.claude/worktrees/
+.phpunit.result.cache
+.phpunit.cache/
