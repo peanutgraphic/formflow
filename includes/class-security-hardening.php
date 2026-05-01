@@ -406,8 +406,8 @@ class SecurityHardening {
             return false;
         }
 
-        // Check session token
-        if (($data['security_token'] ?? '') !== $this->session_token) {
+        // Check session token (constant-time comparison to defeat timing attacks)
+        if (! hash_equals((string) $this->session_token, (string) ($data['security_token'] ?? ''))) {
             return false;
         }
 
