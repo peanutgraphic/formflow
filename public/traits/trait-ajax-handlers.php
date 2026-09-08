@@ -682,8 +682,12 @@ trait Frontend_Ajax_Handlers {
             : __('Outdoor Switch', 'formflow');
 
         // Schedule info
-        $schedule_date = $form_data['schedule_date'] ?? '';
-        $schedule_time = $form_data['schedule_time'] ?? '';
+        // Render the same customer-facing strings the confirmation screen uses.
+        // These used to be the raw stored values, so the email a customer keeps
+        // told them "Date: 2026-09-14 / Time: MD" - MD being the internal code
+        // for the midday window, not the state.
+        $schedule_date = \ISF\Utilities::getAppointmentDateDisplay($form_data['schedule_date'] ?? '');
+        $schedule_time = \ISF\Utilities::getTimeSlotDisplay($form_data['schedule_time'] ?? '');
         if (empty($schedule_date)) {
             $schedule_date = __('To be scheduled', 'formflow');
             $schedule_time = __('A representative will contact you', 'formflow');
