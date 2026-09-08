@@ -68,6 +68,59 @@ class MockApiClient {
     ];
 
     /**
+     * Get the demo account to advertise for a given service state.
+     *
+     * Demo mode ships one canned record per state. The demo banner used to
+     * name the DC record on every instance, which meant following its own
+     * instructions on a Maryland program produced a Washington, DC address on
+     * the scheduler screen. Callers should pass the state of the instance's
+     * utility so the advertised record matches the program the customer is
+     * looking at.
+     *
+     * @param string $state Two-letter state code (MD, DE, DC).
+     * @return array{account:string,zip:string,city:string,state:string} Demo account summary.
+     */
+    public static function get_demo_account_for_state(string $state): array {
+        $state = strtoupper($state);
+
+        // Reflect the instance property without needing a constructed client
+        // (which would open a DB connection just to read a constant).
+        $accounts = (new \ReflectionClass(self::class))
+            ->getDefaultProperties()['demo_accounts'];
+
+        foreach ($accounts as $number => $account) {
+            // Skip the wildcard pattern - it is not a dialable account number.
+            if (str_contains($number, '*')) {
+                continue;
+            }
+
+            if (($account['state'] ?? '') === $state) {
+                return [
+                    'account' => (string) $number,
+                    'zip' => $account['zip'],
+                    'city' => $account['city'],
+                    'state' => $account['state'],
+                ];
+            }
+        }
+
+        // Unknown state: fall back to the first concrete record so the banner
+        // still gives the demo user something that works.
+        foreach ($accounts as $number => $account) {
+            if (!str_contains($number, '*')) {
+                return [
+                    'account' => (string) $number,
+                    'zip' => $account['zip'],
+                    'city' => $account['city'],
+                    'state' => $account['state'],
+                ];
+            }
+        }
+
+        return ['account' => '', 'zip' => '', 'city' => '', 'state' => ''];
+    }
+
+    /**
      * Constructor
      *
      * @param int|null $instance_id The form instance ID for logging
@@ -119,7 +172,10 @@ class MockApiClient {
 
         // Return error for invalid accounts
         return new ValidationResult($this->build_error_response(
-            'Account not found. For demo, use account 1234567890 with ZIP 20001, or any account with ZIP 00000.'
+            // Don't name a specific account here: the demo record differs per
+            // state, and this client has no instance state to pick from. The
+            // banner above the form already advertises the right one.
+            'Account not found. For demo, use the account shown in the demo banner above, or any account with ZIP 00000.'
         ));
     }
 
