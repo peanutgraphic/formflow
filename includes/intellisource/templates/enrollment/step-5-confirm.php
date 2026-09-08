@@ -174,11 +174,11 @@ if (empty($terms_content)) {
                 <div class="isf-review-grid isf-review-grid-2">
                     <div class="isf-review-item">
                         <span class="isf-review-label"><?php esc_html_e('Date', 'formflow'); ?></span>
-                        <span class="isf-review-value" id="review-date"><?php echo esc_html(\ISF\Utilities::getAppointmentDateDisplay($form_data['schedule_date'] ?? '')); ?></span>
+                        <span class="isf-review-value" id="review-date"><?php echo esc_html(\ISF\Utilities::getAppointmentDateDisplay($form_data['schedule_date'] ?? '') ?: ($form_data['schedule_date'] ?? '')); ?></span>
                     </div>
                     <div class="isf-review-item">
                         <span class="isf-review-label"><?php esc_html_e('Time', 'formflow'); ?></span>
-                        <span class="isf-review-value" id="review-time"><?php echo esc_html(\ISF\Utilities::getTimeSlotDisplay($form_data['schedule_time'] ?? '')); ?></span>
+                        <span class="isf-review-value" id="review-time"><?php echo esc_html(\ISF\Utilities::getTimeSlotDisplay($form_data['schedule_time'] ?? '') ?: ($form_data['schedule_time'] ?? '')); ?></span>
                     </div>
                 </div>
                 <?php if (!empty($form_data['special_instructions'])) : ?>

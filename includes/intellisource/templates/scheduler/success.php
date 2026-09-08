@@ -39,11 +39,11 @@ $address = $form_data['address'] ?? [];
         <div class="isf-success-grid">
             <div class="isf-success-item">
                 <span class="isf-success-label"><?php esc_html_e('Date', 'formflow'); ?></span>
-                <span class="isf-success-value" id="success-date"><?php echo esc_html(\ISF\Utilities::getAppointmentDateDisplay($form_data['schedule_date'] ?? '')); ?></span>
+                <span class="isf-success-value" id="success-date"><?php echo esc_html(\ISF\Utilities::getAppointmentDateDisplay($form_data['schedule_date'] ?? '') ?: ($form_data['schedule_date'] ?? '')); ?></span>
             </div>
             <div class="isf-success-item">
                 <span class="isf-success-label"><?php esc_html_e('Time', 'formflow'); ?></span>
-                <span class="isf-success-value" id="success-time"><?php echo esc_html(\ISF\Utilities::getTimeSlotDisplay($form_data['schedule_time'] ?? '')); ?></span>
+                <span class="isf-success-value" id="success-time"><?php echo esc_html(\ISF\Utilities::getTimeSlotDisplay($form_data['schedule_time'] ?? '') ?: ($form_data['schedule_time'] ?? '')); ?></span>
             </div>
             <?php if (!empty(trim($customer_name))) : ?>
             <div class="isf-success-item">
