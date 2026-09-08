@@ -594,7 +594,12 @@ trait Frontend_Ajax_Handlers {
                 'missing_fields' => $missing_labels
             ]);
 
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
+            // Throwable, not Exception: by the time the email and webhook run
+            // the enrollment has already been sent to the API and the
+            // submission marked completed, so an uncaught PHP Error would put a
+            // white-screen 500 in front of an enrollment that actually went
+            // through - the same failure isf_book_appointment had.
             $this->db->log('error', 'Enrollment submission error: ' . $e->getMessage(), [
                 'exception_class' => get_class($e),
             ], $instance_id, $submission['id']);
