@@ -80,4 +80,33 @@ class ConfirmationTimeSlotDisplayTest extends TestCase
         $this->assertSame('', Utilities::getAppointmentDateDisplay('   '));
         $this->assertSame('', Utilities::getAppointmentDateDisplay('not-a-date'));
     }
+
+    /**
+     * Pin the templates: no customer-facing screen may echo the raw
+     * schedule_time / schedule_date values again. The review step shows the
+     * same two values before the customer commits and had the same bug.
+     */
+    public function test_templates_do_not_echo_raw_schedule_values(): void
+    {
+        $templates = [
+            'includes/intellisource/templates/enrollment/success.php',
+            'includes/intellisource/templates/scheduler/success.php',
+            'includes/intellisource/templates/enrollment/step-5-confirm.php',
+        ];
+
+        foreach ($templates as $template) {
+            $markup = file_get_contents(dirname(__DIR__, 2) . '/' . $template);
+
+            $this->assertStringNotContainsString(
+                'esc_html($form_data[\'schedule_time\']',
+                $markup,
+                "{$template} still echoes the raw time slot code"
+            );
+            $this->assertStringNotContainsString(
+                'esc_html($form_data[\'schedule_date\']',
+                $markup,
+                "{$template} still echoes the raw appointment date"
+            );
+        }
+    }
 }
