@@ -43,7 +43,7 @@ $address = $form_data['address'] ?? [];
             </div>
             <div class="isf-success-item">
                 <span class="isf-success-label"><?php esc_html_e('Time', 'formflow'); ?></span>
-                <span class="isf-success-value" id="success-time"><?php echo esc_html($form_data['schedule_time'] ?? ''); ?></span>
+                <span class="isf-success-value" id="success-time"><?php echo esc_html(\ISF\Utilities::getTimeSlotDisplay($form_data['schedule_time'] ?? '')); ?></span>
             </div>
             <?php if (!empty(trim($customer_name))) : ?>
             <div class="isf-success-item">

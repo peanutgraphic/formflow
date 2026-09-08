@@ -251,6 +251,30 @@ class Utilities
     }
 
     /**
+     * Get the customer-facing arrival window for a time slot code.
+     *
+     * This is the single source of truth for the ranges customers are shown
+     * once a slot is booked: the confirmation screens, the reminder SMS and
+     * the self-service reschedule page all render this string, so they cannot
+     * drift apart. Codes are the IntelliSOURCE slot identifiers (AM/MD/PM/EV)
+     * and are internal - never echo one to a customer.
+     *
+     * @param string $code Time slot code, in either case.
+     * @return string Arrival window, or an empty string for an unknown code.
+     */
+    public static function getTimeSlotDisplay(string $code): string
+    {
+        $windows = [
+            'AM' => '8:00 AM - 11:00 AM',
+            'MD' => '11:00 AM - 2:00 PM',
+            'PM' => '2:00 PM - 5:00 PM',
+            'EV' => '5:00 PM - 8:00 PM',
+        ];
+
+        return $windows[strtoupper($code)] ?? '';
+    }
+
+    /**
      * Get time slot label with range
      *
      * @param string $code   Time slot code.
