@@ -61,4 +61,23 @@ class ConfirmationTimeSlotDisplayTest extends TestCase
         $this->assertSame('', Utilities::getTimeSlotDisplay('ZZ'));
         $this->assertSame('', Utilities::getTimeSlotDisplay(''));
     }
+
+    /**
+     * The confirmation used to print the raw Y-m-d the API stores. It should
+     * match the shape the booking summary and self-service page already use.
+     */
+    public function test_appointment_date_renders_in_long_form(): void
+    {
+        $this->assertSame(
+            'Monday, September 14, 2026',
+            Utilities::getAppointmentDateDisplay('2026-09-14')
+        );
+    }
+
+    public function test_appointment_date_handles_missing_or_junk_values(): void
+    {
+        $this->assertSame('', Utilities::getAppointmentDateDisplay(''));
+        $this->assertSame('', Utilities::getAppointmentDateDisplay('   '));
+        $this->assertSame('', Utilities::getAppointmentDateDisplay('not-a-date'));
+    }
 }

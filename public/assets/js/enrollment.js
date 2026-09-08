@@ -1001,6 +1001,8 @@
         $('#schedule_time').val('');
         $('#schedule_fsr').val('');
         $('#isf-appointment-summary').hide();
+        // Changing the date clears the slot, so re-gate the submit button.
+        $('.isf-btn-next[data-requires-timeslot]').prop('disabled', true);
         // Reset button text to "Skip"
         $('#isf-schedule-continue .isf-btn-text-skip').show();
         $('#isf-schedule-continue .isf-btn-text-confirm').hide();
@@ -1029,6 +1031,11 @@
         $('#isf-appointment-summary').show();
         $('#isf-schedule-continue .isf-btn-text-skip').hide();
         $('#isf-schedule-continue .isf-btn-text-confirm').show();
+
+        // Release the submit button on flows that gate it behind a slot choice.
+        // The enrollment step can be skipped so its button is never disabled;
+        // the scheduler has no skip path and ships disabled.
+        $slot.closest('form').find('.isf-btn-next[data-requires-timeslot]').prop('disabled', false);
     }
 
     /**

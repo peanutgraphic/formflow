@@ -115,7 +115,14 @@ $address = $form_data['address'] ?? [];
                 <span class="isf-btn-arrow">&larr;</span>
                 <?php esc_html_e('Back', 'formflow'); ?>
             </button>
-            <button type="submit" class="isf-btn isf-btn-primary isf-btn-next" disabled>
+            <?php
+            // data-requires-timeslot marks this button as gated on a time-slot
+            // selection. The scheduler has no "skip" path, so it ships disabled
+            // and the slot handler in enrollment.js releases it. Without the
+            // attribute nothing ever cleared `disabled` and the flow dead-ended
+            // with a date and time selected but no way to submit.
+            ?>
+            <button type="submit" class="isf-btn isf-btn-primary isf-btn-next" data-requires-timeslot="1" disabled>
                 <span class="isf-btn-text"><?php esc_html_e('Confirm Appointment', 'formflow'); ?></span>
                 <span class="isf-btn-loading" style="display:none;">
                     <svg class="isf-spinner" viewBox="0 0 24 24" width="20" height="20">

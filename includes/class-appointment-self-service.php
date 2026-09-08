@@ -357,7 +357,7 @@ class AppointmentSelfService {
         $content = $instance['settings']['content'] ?? [];
         $program_name = $content['program_name'] ?? 'Energy Wise Rewards';
 
-        $date_display = date('l, F j, Y', strtotime($form_data['schedule_date']));
+        $date_display = \ISF\Utilities::getAppointmentDateDisplay($form_data['schedule_date'] ?? '');
         $time_display = $this->get_time_display($form_data['schedule_time']);
 
         $subject = $language === 'es'

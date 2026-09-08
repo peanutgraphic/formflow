@@ -275,6 +275,37 @@ class Utilities
     }
 
     /**
+     * Get the customer-facing form of an appointment date.
+     *
+     * Pairs with getTimeSlotDisplay(): the booking summary and the
+     * self-service page both show "Wednesday, September 16, 2026", so the
+     * confirmation screen renders the same shape rather than the raw
+     * Y-m-d the API stores.
+     *
+     * @param string $date Date in Y-m-d form.
+     * @return string Formatted date, or an empty string if unparseable.
+     */
+    public static function getAppointmentDateDisplay(string $date): string
+    {
+        $date = trim($date);
+        if ($date === '') {
+            return '';
+        }
+
+        $timestamp = strtotime($date);
+        if ($timestamp === false) {
+            return '';
+        }
+
+        // Prefer date_i18n so the month and weekday follow the site locale.
+        if (function_exists('date_i18n')) {
+            return date_i18n('l, F j, Y', $timestamp);
+        }
+
+        return date('l, F j, Y', $timestamp);
+    }
+
+    /**
      * Get time slot label with range
      *
      * @param string $code   Time slot code.
